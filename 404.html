@@ -18,14 +18,14 @@
             flex-direction: column;
             justify-content: center;
         }
-        。container {
+        .container {
             background: rgba(255, 255, 255, 0.1);
             padding: 40px;
             border-radius: 15px;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
         }
-        。spinner {
+        .spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top: 4px solid white;
@@ -69,7 +69,11 @@
     <script>
         // 配置项 - 请根据实际情况修改
         const CONFIG = {
-            GITHUB_API_URL: 'https://zanyuyi.github.io/link_doubao/',
+            // 以 / 结尾的 Issues API 地址，例如：
+            // https://api.github.com/repos/yourusername/url-shortener-db/issues/
+            GITHUB_API_URL: 'https://api.github.com/repos/yourusername/url-shortener-db/issues/',
+            // 如果需要使用 GitHub Token，请填入；否则保持为空字符串
+            GITHUB_TOKEN: '',
             TIMEOUT: 5000,
             CACHE_DURATION: 60
         };
@@ -161,13 +165,18 @@
             }
 
             async fetchFromGitHub() {
-                const apiUrl = CONFIG.GITHUB_API_URL + this.shortCode;
-                
+                if (!CONFIG.GITHUB_API_URL || CONFIG.GITHUB_API_URL.includes('yourusername')) {
+                    Utils.showError('请先在 404.html 中配置有效的 GITHUB_API_URL');
+                    return null;
+                }
+
+                const apiUrl = this.buildIssueUrl();
+
                 Utils.updateStatus('正在查询链接信息...');
-                
+
                 const response = await Promise.race([
-                    fetch(apiUrl),
-                    new Promise((_, reject) => 
+                    fetch(apiUrl, this.buildRequestOptions()),
+                    new Promise((_, reject) =>
                         setTimeout(() => reject(new Error('请求超时')), CONFIG.TIMEOUT)
                     )
                 ]);
@@ -185,7 +194,7 @@
 
                 const data = await response.json();
                 const targetUrl = data.title.trim();
-                
+
                 if (!Utils.isValidUrl(targetUrl)) {
                     Utils.showError('存储的目标URL格式无效');
                     return null;
@@ -194,9 +203,28 @@
                 return targetUrl;
             }
 
+            buildIssueUrl() {
+                if (CONFIG.GITHUB_API_URL.endsWith('/')) {
+                    return CONFIG.GITHUB_API_URL + this.shortCode;
+                }
+                return CONFIG.GITHUB_API_URL + '/' + this.shortCode;
+            }
+
+            buildRequestOptions() {
+                const headers = {
+                    'Accept': 'application/vnd.github+json'
+                };
+
+                if (CONFIG.GITHUB_TOKEN) {
+                    headers['Authorization'] = `Bearer ${CONFIG.GITHUB_TOKEN}`;
+                }
+
+                return { headers };
+            }
+
             redirect(url) {
                 Utils.updateStatus(`即将跳转到: ${url}`);
-                
+
                 setTimeout(() => {
                     window.location.href = url;
                 }, 1000);
