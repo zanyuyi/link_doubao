@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub短链系统</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .intro {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 120px;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .usage {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .usage h3 {
+            margin-top: 0;
+        }
+        .usage p {
+            margin: 10px 0;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 GitHub短链系统</h1>
+        <div class="intro">
+            <p>完全基于GitHub的免费URL缩短服务</p>
+            <p>无需服务器 · 零维护成本 · 稳定可靠</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">0</div>
+                <div>活跃链接</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">0</div>
+                <div>总点击量</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div>可用性</div>
+            </div>
+        </div>
+        
+        <div class="usage">
+            <h3>📚 使用方法</h3>
+            <p>1. 访问 <a href="https://github.com/yourusername/url-shortener-db/issues" target="_blank">Issues管理页面</a> 创建新Issue</p>
+            <p>2. Issue标题填写目标URL（必须包含http(s)://）</p>
+            <p>3. 使用 <code>https://yourdomain.com/[issue编号]</code> 访问</p>
+            <p>4. 示例：如果Issue编号是123，访问 <code>https://short.yourdomain.com/123</code></p>
+        </div>
+        
+        <div class="features">
+            <h3>✨ 特性</h3>
+            <p>✅ 完全免费 · ✅ 无需服务器 · ✅ 易于管理 · ✅ 自定义域名 · ✅ 缓存机制 · ✅ 错误处理</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Powered by GitHub Pages | 基于开源项目构建</p>
+    </div>
+</body>
+</html>
